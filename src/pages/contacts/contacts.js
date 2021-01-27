@@ -5,6 +5,7 @@ import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import ContactsTable from "../../components/contacts-table";
+import Statistics from "../../components/statistics";
 
 const getContacts = async () => {
   const response = await fetch("https://randomuser.me/api/?results=20");
@@ -30,7 +31,12 @@ const Contacts = () => {
               if (error) {
                 return <p>An error has occurred</p>;
               }
-              return <ContactsTable data={data} />;
+              return (
+                <>
+                  <ContactsTable data={data} />
+                  <Statistics data={data} />
+                </>
+              );
             })()}
           </Grid>
         </Grid>

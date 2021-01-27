@@ -9,6 +9,8 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Avatar from "@material-ui/core/Avatar";
 import moment from "moment";
+import { nationalities } from "../../utils/demonym";
+import CopyToClipboard from "../copy-to-clipboard";
 
 const ContactsTable = ({ data }) => {
   const classes = useStyles();
@@ -27,31 +29,41 @@ const ContactsTable = ({ data }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((contact) => (
-            <TableRow key={contact.login.uid}>
-              <TableCell component="th" scope="row">
-                <Avatar
-                  src={contact.picture.thumbnail}
-                  alt={contact.name.first}
-                />
-              </TableCell>
-              <TableCell align="right">
-                {contact.name.title} {contact.name.first} {contact.name.last}
-              </TableCell>
-              <TableCell align="right">
-                {moment(contact.dob.date).format("dddd, MM/DD/YYYY, h:mm:ss A")}
-                <p>{contact.dob.age} y/o</p>
-              </TableCell>
-              <TableCell align="right">{contact.email}</TableCell>
-              <TableCell align="right">{contact.phone}</TableCell>
-              <TableCell align="right">{contact.location.country}</TableCell>
-              <TableCell align="right">{contact.nat}</TableCell>
-            </TableRow>
-          ))}
+          {data.map((contact) => {
+            return (
+              <TableRow key={contact.login.uid}>
+                <TableCell component="th" scope="row">
+                  <Avatar
+                    src={contact.picture.thumbnail}
+                    alt={contact.name.first}
+                  />
+                </TableCell>
+                <TableCell align="right">
+                  {contact.name.title} {contact.name.first} {contact.name.last}
+                </TableCell>
+                <TableCell align="right">
+                  {moment(contact.dob.date).format(
+                    "dddd, MM/DD/YYYY, h:mm:ss A"
+                  )}
+                  <p>{contact.dob.age} y/o</p>
+                </TableCell>
+                <TableCell align="right">
+                  <CopyToClipboard text={contact.email} />
+                </TableCell>
+                <TableCell align="right">
+                  
+                  <CopyToClipboard text={contact.phone} />
+                </TableCell>
+                <TableCell align="right">{contact.location.country}</TableCell>
+                <TableCell align="right">
+                  {nationalities[contact.nat]}
+                </TableCell>
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </TableContainer>
-    // <Paper className={classes.paper}>{contact.name.first}</Paper>
   );
 };
 
